@@ -286,6 +286,9 @@ msgstr "Použitelné proměnné pro obsah"
 msgid "Applicable variables for Subject"
 msgstr "Použitelné proměnné pro předmět"
 
+msgid "Apply"
+msgstr "Použít"
+
 msgid "Apply according to customer"
 msgstr "Aplikovat podle zákazníka"
 
@@ -1308,6 +1311,9 @@ msgstr "Doména %domainName%"
 
 msgid "Domain <strong>{{ name }}</strong> modified. Try clearing your browser cache (CTRL+F5) if you can't see the new icon."
 msgstr "Byla upravena doména <strong>{{ name }}</strong>. Nevidíte-li novou ikonu, zkuste smazat cache vašeho prohlížeče (CTRL+F5)."
+
+msgid "Domain filter"
+msgstr "Filtr domén"
 
 msgid "Domain name"
 msgstr "Název domény"
@@ -2880,6 +2886,9 @@ msgstr "Překontrolujte prosím zadané hodnoty.<br>"
 
 msgid "Please fill all default values before creating a product"
 msgstr "Prosím vyplňte všechny výchozí hodnoty před vytvořením produktu"
+
+msgid "Please select at least one domain."
+msgstr "Vyberte prosím alespoň jednu doménu."
 
 msgid "Please wait until all files are uploaded and try again."
 msgstr "Prosím počkejte dokud nebudou nahrány všechny soubory a zkuste to znovu."
