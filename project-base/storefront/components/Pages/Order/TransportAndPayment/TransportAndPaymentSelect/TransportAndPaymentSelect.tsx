@@ -8,8 +8,10 @@ import {
     useTransportChangeInSelect,
 } from 'components/Pages/Order/TransportAndPayment/transportAndPaymentUtils';
 import { TIDs } from 'cypress/tids';
+import { AnimatePresence, m } from 'framer-motion';
 import { TypeTransportWithAvailablePaymentsFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
+import { collapseExpandAnimation } from 'utils/animations/animationVariants';
 import { ChangePaymentInCart } from 'utils/cart/useChangePaymentInCart';
 import { ChangeTransportInCart } from 'utils/cart/useChangeTransportInCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
@@ -73,33 +75,42 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                         />
                     )}
                 </div>
-                {transport !== null && (
-                    <div className="relative mt-12" tid={TIDs.pages_order_payment}>
-                        {isTransportSelectionLoading && <LoaderWithOverlay className="w-8" />}
-
-                        <div className="h4 mb-3">{t('Choose payment')}</div>
-                        <ul>
-                            {payment ? (
-                                <PaymentListItem isActive changePayment={changePayment} payment={payment} />
-                            ) : (
-                                transport.payments.map((paymentItem) => (
-                                    <PaymentListItem
-                                        key={paymentItem.uuid}
-                                        changePayment={changePayment}
-                                        payment={paymentItem}
-                                    />
-                                ))
+                <AnimatePresence initial={false}>
+                    {transport !== null && (
+                        <m.div
+                            key="payments-list"
+                            animate="open"
+                            className="relative mt-12 !flex flex-col"
+                            exit="closed"
+                            initial="closed"
+                            tid={TIDs.pages_order_payment}
+                            variants={collapseExpandAnimation}
+                        >
+                            {isTransportSelectionLoading && <LoaderWithOverlay className="w-8" />}
+                            <div className="h4 mb-3">{t('Choose payment')}</div>
+                            <ul>
+                                {payment ? (
+                                    <PaymentListItem isActive changePayment={changePayment} payment={payment} />
+                                ) : (
+                                    transport.payments.map((paymentItem) => (
+                                        <PaymentListItem
+                                            key={paymentItem.uuid}
+                                            changePayment={changePayment}
+                                            payment={paymentItem}
+                                        />
+                                    ))
+                                )}
+                            </ul>
+                            {payment !== null && (
+                                <ResetButton
+                                    text={t('Change payment type')}
+                                    tid={TIDs.reset_payment_button}
+                                    onClick={resetPaymentAndGoPayBankSwift}
+                                />
                             )}
-                        </ul>
-                        {payment !== null && (
-                            <ResetButton
-                                text={t('Change payment type')}
-                                tid={TIDs.reset_payment_button}
-                                onClick={resetPaymentAndGoPayBankSwift}
-                            />
-                        )}
-                    </div>
-                )}
+                        </m.div>
+                    )}
+                </AnimatePresence>
             </div>
         </>
     );
