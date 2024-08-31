@@ -9,11 +9,13 @@ import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper } from 'c
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TIDs } from 'cypress/tids';
+import { AnimatePresence, m } from 'framer-motion';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import useTranslation from 'next-translate/useTranslation';
 import { FormProvider, SubmitHandler, useWatch } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
 import { RegistrationFormType } from 'types/form';
+import { collapseExpandAnimation } from 'utils/animations/animationVariants';
 import { useRegistration } from 'utils/auth/useRegistration';
 import { blurInput } from 'utils/forms/blurInput';
 import { clearForm } from 'utils/forms/clearForm';
@@ -49,16 +51,29 @@ export const RegistrationContent: FC = () => {
 
     return (
         <Webline className="flex flex-col items-center">
-            <h1 className="max-w-3xl w-full">{t('New customer registration')}</h1>
+            <h1 className="w-full max-w-3xl">{t('New customer registration')}</h1>
             <FormProvider {...formProviderMethods}>
                 <Form
-                    className="max-w-3xl w-full flex justify-center"
+                    className="flex w-full max-w-3xl justify-center"
                     onSubmit={formProviderMethods.handleSubmit(onRegistrationHandler)}
                 >
                     <FormContentWrapper>
                         <RegistrationUser />
 
-                        {customerValue === 'companyCustomer' && <RegistrationCompany />}
+                        <AnimatePresence initial={false}>
+                            {customerValue === 'companyCustomer' && (
+                                <m.div
+                                    key="registration-company-data"
+                                    animate="open"
+                                    className="!flex flex-col"
+                                    exit="closed"
+                                    initial="closed"
+                                    variants={collapseExpandAnimation}
+                                >
+                                    <RegistrationCompany />
+                                </m.div>
+                            )}
+                        </AnimatePresence>
 
                         <RegistrationPassword />
 
