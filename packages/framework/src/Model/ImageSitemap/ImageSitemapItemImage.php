@@ -12,7 +12,7 @@ class ImageSitemapItemImage
 
     public ?string $geoLocation = null;
 
-    public string $title;
+    public ?string $title = null;
 
     public ?string $license = null;
 }
