@@ -144,10 +144,12 @@ class StoreOpeningHoursProvider implements ResetInterface
             $dayOfWeekName = $this->getEnglishDayNameFromDayNumber($openingHourData->dayOfWeek);
 
             foreach ($openingHourData->openingHoursRanges as $openingHoursRange) {
-                $weekSetting[$dayOfWeekName][] = $this->formatOpeningHours(
-                    $openingHoursRange->openingTime,
-                    $openingHoursRange->closingTime,
-                );
+                if ($openingHoursRange !== null) {
+                    $weekSetting[$dayOfWeekName][] = $this->formatOpeningHours(
+                        $openingHoursRange->openingTime,
+                        $openingHoursRange->closingTime,
+                    );
+                }
             }
         }
 
