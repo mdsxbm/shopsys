@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Complaint;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileFacade;
 use Shopsys\FrameworkBundle\Model\Complaint\Exception\ComplaintNotFoundException;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 
 class ComplaintFacade
 {
@@ -47,6 +48,20 @@ class ComplaintFacade
         $complaint->edit($complaintData);
         $this->editItems($complaint, $complaintData->complaintItems);
         $this->em->flush();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @param int $domainId
+     * @param string $locale
+     * @return \Shopsys\FrameworkBundle\Model\Complaint\Complaint[]
+     */
+    public function getComplaintsByCustomerUserAndDomainIdAndLocale(
+        CustomerUser $customerUser,
+        int $domainId,
+        string $locale,
+    ): array {
+        return $this->complaintRepository->getComplaintsByCustomerUserAndDomainIdAndLocale($customerUser, $domainId, $locale);
     }
 
     /**
