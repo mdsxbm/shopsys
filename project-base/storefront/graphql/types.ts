@@ -1992,6 +1992,8 @@ export type TypePaymentSetupCreationData = {
 
 export type TypePersonalData = {
   __typename?: 'PersonalData';
+  /** Customer complaints */
+  complaints: Array<TypeComplaint>;
   /** Customer user data */
   customerUser: Maybe<TypeCustomerUser>;
   /** A link for downloading the personal data in an XML file */

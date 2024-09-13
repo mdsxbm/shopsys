@@ -19,6 +19,7 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
     const orders = personalDataDetail.accessPersonalData.orders;
     const newsLetterSubscriber = personalDataDetail.accessPersonalData.newsletterSubscriber;
     const exportLink = personalDataDetail.accessPersonalData.exportLink;
+    const complaints = personalDataDetail.accessPersonalData.complaints;
 
     return (
         <>
@@ -211,6 +212,43 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
                     </div>
                 ) : (
                     <p>{t('You have no orders')}</p>
+                )}
+            </Webline>
+
+            <Webline className="mt-6">
+                <h2 className="mb-3">{t('My complaints')}</h2>
+
+                {complaints.length ? (
+                    <div className="flex flex-col gap-4">
+                        {complaints.map((complain) => (
+                            <Table key={complain.uuid}>
+                                <Row className="flex flex-col md:flex-row">
+                                    <Cell className="flex-1">
+                                        <Table className="border-0 p-0">
+                                            <Row>
+                                                <CellMinor>{t('Complain number')}</CellMinor>
+                                                <Cell>{complain.number}</Cell>
+                                            </Row>
+                                            <Row>
+                                                <CellMinor>{t('Creation date')}</CellMinor>
+                                                <Cell>{formatDate(complain.createdAt, 'l')}</Cell>
+                                            </Row>
+                                            <Row>
+                                                <CellMinor>{t('First name')}</CellMinor>
+                                                <Cell>{complain.deliveryFirstName}</Cell>
+                                            </Row>
+                                            <Row>
+                                                <CellMinor>{t('Last name')}</CellMinor>
+                                                <Cell>{complain.deliveryLastName}</Cell>
+                                            </Row>
+                                        </Table>
+                                    </Cell>
+                                </Row>
+                            </Table>
+                        ))}
+                    </div>
+                ) : (
+                    <p>{t('You have no complaints')}</p>
                 )}
             </Webline>
 
