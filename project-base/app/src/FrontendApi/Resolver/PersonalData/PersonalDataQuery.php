@@ -85,7 +85,7 @@ class PersonalDataQuery extends AbstractQuery
         $complaints = [];
 
         if ($customerUser !== null) {
-            $complaints = $this->complaintFacade->getComplaintsByCustomerUserAndDomainIdAndLocale($customerUser, $domainId, $this->domain->getLocale());
+            $complaints = $this->complaintFacade->getComplaintsByCustomerUserDomainIdAndLocale($customerUser, $domainId, $this->domain->getLocale());
         }
 
         return [

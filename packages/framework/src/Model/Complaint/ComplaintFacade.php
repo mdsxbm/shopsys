@@ -56,12 +56,12 @@ class ComplaintFacade
      * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Complaint\Complaint[]
      */
-    public function getComplaintsByCustomerUserAndDomainIdAndLocale(
+    public function getComplaintsByCustomerUserDomainIdAndLocale(
         CustomerUser $customerUser,
         int $domainId,
         string $locale,
     ): array {
-        return $this->complaintRepository->getComplaintsByCustomerUserAndDomainIdAndLocale($customerUser, $domainId, $locale);
+        return $this->complaintRepository->getComplaintsByCustomerUserDomainIdAndLocale($customerUser, $domainId, $locale);
     }
 
     /**

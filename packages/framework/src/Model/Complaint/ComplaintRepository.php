@@ -88,17 +88,18 @@ class ComplaintRepository
      * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Complaint\Complaint[]
      */
-    public function getComplaintsByCustomerUserAndDomainIdAndLocale(
+    public function getComplaintsByCustomerUserDomainIdAndLocale(
         CustomerUser $customerUser,
         int $domainId,
         string $locale,
     ): array {
-        return $this->getComplaintRepository()->createQueryBuilder('cmp')
-            ->addSelect('c')->leftJoin('cmp.deliveryCountry', 'c')
-            ->addSelect('ct')->join('c.translations', 'ct', Join::WITH, 'ct.locale = :locale')
-            ->addSelect('cmpi')->join('cmp.items', 'cmpi')
-            ->where('cmp.customerUser = :customerUser')
-            ->andWhere('cmp.domainId = :domainId')
+        return $this->getComplaintRepository()->createQueryBuilder('c')
+            ->addSelect('cdc, ct, ci')
+            ->leftJoin('c.deliveryCountry', 'cdc')
+            ->join('c.translations', 'ct', Join::WITH, 'ct.locale = :locale')
+            ->join('c.items', 'ci')
+            ->where('c.customerUser = :customerUser')
+            ->andWhere('c.domainId = :domainId')
             ->setParameter('customerUser', $customerUser)
             ->setParameter('domainId', $domainId)
             ->setParameter('locale', $locale)
