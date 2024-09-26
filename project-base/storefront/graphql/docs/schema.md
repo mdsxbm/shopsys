@@ -147,6 +147,7 @@
     * [PersonalDataAccessRequestTypeEnum](#personaldataaccessrequesttypeenum)
     * [ProductListTypeEnum](#productlisttypeenum)
     * [ProductOrderingModeEnum](#productorderingmodeenum)
+    * [ProductTypeEnum](#producttypeenum)
     * [RecommendationType](#recommendationtype)
     * [StoreOpeningStatusEnum](#storeopeningstatusenum)
     * [TransportTypeEnum](#transporttypeenum)
@@ -5190,6 +5191,11 @@ Product images
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>isInquiryType</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>isMainVariant</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
@@ -5281,6 +5287,11 @@ Product part number
 Product price
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>productType</strong></td>
+<td valign="top"><a href="#producttypeenum">ProductTypeEnum</a>!</td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>productVideos</strong></td>
@@ -7785,6 +7796,11 @@ Product images
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>isInquiryType</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>isMainVariant</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
@@ -7876,6 +7892,11 @@ Product part number
 Product price
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>productType</strong></td>
+<td valign="top"><a href="#producttypeenum">ProductTypeEnum</a>!</td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>productVideos</strong></td>
@@ -9043,6 +9064,11 @@ Product images
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>isInquiryType</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>isMainVariant</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
@@ -9139,6 +9165,11 @@ Product part number
 Product price
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>productType</strong></td>
+<td valign="top"><a href="#producttypeenum">ProductTypeEnum</a>!</td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>productVideos</strong></td>
@@ -11401,6 +11432,35 @@ Order by relevance
 </tbody>
 </table>
 
+### ProductTypeEnum
+
+One of possible product types
+
+<table>
+<thead>
+<th align="left">Value</th>
+<th align="left">Description</th>
+</thead>
+<tbody>
+<tr>
+<td valign="top"><strong>BASIC</strong></td>
+<td>
+
+Basic product
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>INQUIRY</strong></td>
+<td>
+
+Product with inquiry form instead of add to cart button
+
+</td>
+</tr>
+</tbody>
+</table>
+
 ### RecommendationType
 
 <table>
@@ -12149,6 +12209,11 @@ Product images
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>isInquiryType</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>isMainVariant</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
@@ -12240,6 +12305,11 @@ Product part number
 Product price
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>productType</strong></td>
+<td valign="top"><a href="#producttypeenum">ProductTypeEnum</a>!</td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>productVideos</strong></td>
