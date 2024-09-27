@@ -1,0 +1,19 @@
+{% extends '@ShopsysFramework/Admin/Grid/Grid.html.twig' %}
+
+{% block grid_value_cell_id_productName %}
+    {{ value }}
+    <a href="{{ url('admin_product_edit', { id: row.productId }) }}">{{ icon('forward-page') }}</a>
+{% endblock %}
+
+{% block grid_value_cell_id_createdAt %}
+    {{ value|formatDateTime }}
+{% endblock %}
+
+{% block grid_no_data %}
+    {{ 'No inquiries found.'|trans }}
+{% endblock %}
+
+{% block grid_pager_totalcount %}
+    {% set entityName = 'inquiries'|trans %}
+    {{ parent() }}
+{% endblock %}
