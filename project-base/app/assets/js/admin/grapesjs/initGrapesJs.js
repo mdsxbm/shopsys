@@ -139,7 +139,6 @@ export default class InitGrapesJs {
             },
             styleManager: {
                 clearProperties: true,
-                appendTo: document.createElement('div'), // disable rendering a styleManager
                 sectors: []
             },
             selectorManager: {
