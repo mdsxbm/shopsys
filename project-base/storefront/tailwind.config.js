@@ -38,7 +38,7 @@ module.exports = {
             background: '#FFFFFF',
             backgroundMore: '#FAFAFA',
             backgroundMost: '#ECECEC',
-            backgroundBrand: '#0F00A0',
+            backgroundBrand: '#004EB6',
             backgroundBrandLess: '#065FDB',
             backgroundAccent: '#009AFF',
             backgroundAccentLess: '#F4FAFF',

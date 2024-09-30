@@ -1,8 +1,6 @@
 import { useLoginForm, useLoginFormMeta } from './loginFormMeta';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { FacebookIcon } from 'components/Basic/Icon/FacebookIcon';
-import { GoogleIcon } from 'components/Basic/Icon/GoogleIcon';
-import { SeznamIcon } from 'components/Basic/Icon/SeznamIcon';
+import { SocialNetworkLogin } from 'components/Blocks/SocialNetworkLogin/SocialNetworkLogin';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine';
@@ -11,7 +9,6 @@ import { TextInputControlled } from 'components/Forms/TextInput/TextInputControl
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
-import { TypeLoginTypeEnum } from 'graphql/types';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import useTranslation from 'next-translate/useTranslation';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
@@ -35,7 +32,7 @@ export const LoginForm: FC<LoginFormProps> = ({
 }) => {
     const { t } = useTranslation();
     const cartUuid = usePersistStore((store) => store.cartUuid);
-    const productListUuids: string[] = Object.values(usePersistStore((store) => store.productListUuids));
+
     const { url } = useDomainConfig();
     const [resetPasswordUrl] = getInternationalizedStaticUrls(['/reset-password'], url);
 
@@ -43,24 +40,6 @@ export const LoginForm: FC<LoginFormProps> = ({
     const formMeta = useLoginFormMeta(formProviderMethods);
     const login = useLogin();
     const [{ data: settingsData }] = useSettingsQuery();
-
-    const getSocialNetworkLoginUrl = (
-        socialNetwork: TypeLoginTypeEnum,
-        cartUuid: string | null,
-        shouldOverwriteCustomerUserCart: boolean | undefined,
-        productListUuids: string[],
-    ) => {
-        let url = `/social-network/login/${socialNetwork}`;
-        if (cartUuid) {
-            url += `?cartUuid=${cartUuid}&shouldOverwriteCustomerUserCart=${shouldOverwriteCustomerUserCart ? 'true' : 'false'}`;
-        }
-        if (productListUuids.length > 0) {
-            const separator = cartUuid ? '&' : '?';
-            url += `${separator}productListUuids=${productListUuids.join(',')}`;
-        }
-
-        return url;
-    };
 
     const onLoginHandler: SubmitHandler<LoginFormType> = async (data) => {
         blurInput();
@@ -87,6 +66,7 @@ export const LoginForm: FC<LoginFormProps> = ({
             <Form className="w-full flex justify-center" onSubmit={formProviderMethods.handleSubmit(onLoginHandler)}>
                 <FormContentWrapper className={formContentWrapperClassName}>
                     <FormBlockWrapper>
+                        <h4 className="mb-4">{t('Login')}</h4>
                         <TextInputControlled
                             control={formProviderMethods.control}
                             formName={formMeta.formName}
@@ -111,60 +91,28 @@ export const LoginForm: FC<LoginFormProps> = ({
                             }}
                         />
 
-                        <FormButtonWrapper className="mt-5 mb-5 flex flex-col items-center justify-between gap-4 lg:mb-0 lg:border-none lg:p-0">
-                            <FormButtonWrapper>
-                                <SubmitButton tid={TIDs.login_form_submit_button}>{t('Log-in')}</SubmitButton>
+                        <FormButtonWrapper className="flex flex-col gap-4 mt-0">
+                            <FormButtonWrapper className="mt-4 justify-start">
+                                <SubmitButton size="medium" tid={TIDs.login_form_submit_button} variant="inverted">
+                                    {t('Log-in')}
+                                </SubmitButton>
                             </FormButtonWrapper>
+
+                            <div className="whitespace-nowrap mb-4">
+                                <ExtendedNextLink href={resetPasswordUrl}>{t('Lost your password?')}</ExtendedNextLink>
+                            </div>
 
                             {settingsData?.settings?.socialNetworkLoginConfig !== undefined &&
                                 settingsData.settings.socialNetworkLoginConfig.length > 0 && (
-                                    <div className="flex gap-2 lg:order-2 w-full justify-center">
-                                        {settingsData.settings.socialNetworkLoginConfig.map((socialNetwork) => (
-                                            <SocialNetworkLoginLink
-                                                key={socialNetwork}
-                                                socialNetwork={socialNetwork}
-                                                href={getSocialNetworkLoginUrl(
-                                                    socialNetwork,
-                                                    cartUuid,
-                                                    shouldOverwriteCustomerUserCart,
-                                                    productListUuids,
-                                                )}
-                                            />
-                                        ))}
-                                    </div>
+                                    <SocialNetworkLogin
+                                        shouldOverwriteCustomerUserCart={shouldOverwriteCustomerUserCart}
+                                        socialNetworks={settingsData.settings.socialNetworkLoginConfig}
+                                    />
                                 )}
-
-                            <div className="lg:order-3 w-full flex justify-center items-center gap-1 whitespace-nowrap text-sm py-3">
-                                <ExtendedNextLink href={resetPasswordUrl}>{t('Lost your password?')}</ExtendedNextLink>
-                            </div>
                         </FormButtonWrapper>
                     </FormBlockWrapper>
                 </FormContentWrapper>
             </Form>
         </FormProvider>
     );
-};
-
-const SocialNetworkLoginLink: FC<{ href: string; socialNetwork: TypeLoginTypeEnum }> = ({ href, socialNetwork }) => {
-    return (
-        <ExtendedNextLink
-            className="bg-background h-12 w-full shadow-md rounded flex justify-center items-center hover:shadow-greyLight"
-            href={href}
-        >
-            <SocialNetworkIcon socialNetwork={socialNetwork} />
-        </ExtendedNextLink>
-    );
-};
-
-const SocialNetworkIcon: FC<{ socialNetwork: TypeLoginTypeEnum }> = ({ socialNetwork }) => {
-    switch (socialNetwork) {
-        case TypeLoginTypeEnum.Facebook:
-            return <FacebookIcon className="w-7 text-[#1877f2]" />;
-        case TypeLoginTypeEnum.Google:
-            return <GoogleIcon className="w-6" />;
-        case TypeLoginTypeEnum.Seznam:
-            return <SeznamIcon className="w-6" />;
-        default:
-            return null;
-    }
 };

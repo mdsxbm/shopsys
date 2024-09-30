@@ -76,7 +76,7 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
 
                 <div
                     className={twMergeCustom(
-                        'pointer-events-none absolute top-0 -right-[100%] block min-w-[355px] origin-top-right rounded-xl px-5',
+                        'pointer-events-none absolute top-0 -right-[100%] block w-[335px] lg:w-[315px] origin-top-right rounded-xl px-5',
                         'lg:top-full lg:transition-all lg:p-5',
                         'bg-none scale-50 opacity-0',
                         isHoveredDelayed &&
