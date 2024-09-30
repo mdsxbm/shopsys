@@ -68,6 +68,7 @@ export default class InitGrapesJs {
             'customButtons',
             'text-with-image',
             'custom-blocks',
+            'fulfillment-list',
             'table-custom',
             'custom-image',
             'custom-link',
