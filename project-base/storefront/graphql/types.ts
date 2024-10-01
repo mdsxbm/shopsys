@@ -2075,6 +2075,8 @@ export type TypePricingSetting = {
   __typename?: 'PricingSetting';
   /** Code of the default currency used on the current domain */
   defaultCurrencyCode: Scalars['String']['output'];
+  /** Price limit with VAT for free transport and payment (NULL means free transport and payment is not active) */
+  freeTransportAndPaymentPriceWithVatLimit: Maybe<Scalars['Money']['output']>;
   /** Minimum number of decimal places for the price on the current domain */
   minimumFractionDigits: Scalars['Int']['output'];
 };

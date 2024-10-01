@@ -1,0 +1,9 @@
+query SettingsQuery {
+    settings {
+        pricing {
+            defaultCurrencyCode
+            minimumFractionDigits
+            freeTransportAndPaymentPriceWithVatLimit
+        }
+    }
+}

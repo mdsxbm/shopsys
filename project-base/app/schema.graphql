@@ -1673,6 +1673,8 @@ type Price {
 type PricingSetting {
   "Code of the default currency used on the current domain"
   defaultCurrencyCode: String!
+  "Price limit with VAT for free transport and payment (NULL means free transport and payment is not active)"
+  freeTransportAndPaymentPriceWithVatLimit: Money
   "Minimum number of decimal places for the price on the current domain"
   minimumFractionDigits: Int!
 }

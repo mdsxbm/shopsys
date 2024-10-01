@@ -67,7 +67,7 @@ class FreeTransportAndPaymentFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
      */
-    protected function getFreeTransportAndPaymentPriceLimitOnDomain($domainId): ?Money
+    public function getFreeTransportAndPaymentPriceLimitOnDomain(int $domainId): ?Money
     {
         return $this->pricingSetting->getFreeTransportAndPaymentPriceLimit($domainId);
     }

@@ -7183,6 +7183,15 @@ Code of the default currency used on the current domain
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>freeTransportAndPaymentPriceWithVatLimit</strong></td>
+<td valign="top"><a href="#money">Money</a></td>
+<td>
+
+Price limit with VAT for free transport and payment (NULL means free transport and payment is not active)
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>minimumFractionDigits</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>

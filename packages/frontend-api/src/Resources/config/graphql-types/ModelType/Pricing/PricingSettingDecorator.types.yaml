@@ -10,3 +10,6 @@ PricingSettingDecorator:
             minimumFractionDigits:
                 type: "Int!"
                 description: "Minimum number of decimal places for the price on the current domain"
+            freeTransportAndPaymentPriceWithVatLimit:
+                type: "Money"
+                description: "Price limit with VAT for free transport and payment (NULL means free transport and payment is not active)"
