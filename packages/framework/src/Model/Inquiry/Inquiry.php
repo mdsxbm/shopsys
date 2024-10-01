@@ -146,6 +146,11 @@ class Inquiry
         return $this->lastName;
     }
 
+    public function getFullName()
+    {
+        return $this->firstName . ' ' . $this->lastName;
+    }
+
     public function getDomainId()
     {
         return $this->domainId;
