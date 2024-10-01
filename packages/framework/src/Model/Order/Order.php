@@ -1229,4 +1229,12 @@ class Order
     {
         return $this->customer;
     }
+
+    /**
+     * @return bool
+     */
+    public function isCompanyCustomer(): bool
+    {
+        return $this->getCompanyName() !== null && $this->getCompanyNumber() !== null;
+    }
 }

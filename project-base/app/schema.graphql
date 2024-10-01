@@ -1093,6 +1093,8 @@ type Mutation {
   RefreshTokens(input: RefreshTokenInput!): Token!
   "Register new customer user"
   Register(input: RegistrationDataInput!): LoginResult!
+  "Register new customer user using an order data"
+  RegisterByOrder(input: RegistrationByOrderInput!): LoginResult!
   "delete customer user"
   RemoveCustomerUser(input: RemoveCustomerUserDataInput!): Boolean!
   "Remove product from cart"
@@ -2040,6 +2042,13 @@ input RefreshTokenInput {
   refreshToken: String!
 }
 
+input RegistrationByOrderInput {
+  "Order URL hash"
+  orderUrlHash: String!
+  "Customer user password"
+  password: Password!
+}
+
 "Represents the main input object to register customer user"
 input RegistrationDataInput {
   "UUID"
@@ -2064,8 +2073,6 @@ input RegistrationDataInput {
   firstName: String!
   "Customer user last name"
   lastName: String!
-  "Uuid of the last order that should be paired with the newly registered user"
-  lastOrderUuid: Uuid = null
   "Whether customer user should receive newsletters or not"
   newsletterSubscription: Boolean!
   "Customer user password"

@@ -19,6 +19,7 @@ use Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserUpdateDataFactory 
  * @property \App\Model\Customer\User\CustomerUserDataFactory $customerUserDataFactory
  * @method \App\Model\Customer\User\CustomerUserUpdateData createFromCustomerUser(\App\Model\Customer\User\CustomerUser $customerUser)
  * @method \App\Model\Customer\User\CustomerUserUpdateData createFromRegistrationData(\Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationData $registrationData)
+ * @method \App\Model\Customer\User\CustomerUserUpdateData createFromOrder(\App\Model\Order\Order $order, string $password)
  */
 class CustomerUserUpdateDataFactory extends BaseCustomerUserUpdateDataFactory
 {
