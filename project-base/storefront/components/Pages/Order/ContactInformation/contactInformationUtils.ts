@@ -163,7 +163,7 @@ const useHandleCreateOrderResult = () => {
             };
 
             if (!user) {
-                orderConfirmationUrlQuery.registrationData = JSON.stringify(formValues);
+                orderConfirmationUrlQuery.orderUrlHash = createdOrder.urlHash;
             }
 
             const [orderConfirmationUrl] = getInternationalizedStaticUrls(['/order-confirmation'], domainConfig.url);

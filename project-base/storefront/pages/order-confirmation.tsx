@@ -26,7 +26,7 @@ export type OrderConfirmationUrlQuery = {
     orderUuid: string | undefined;
     orderEmail: string | undefined;
     orderPaymentType: string | undefined;
-    registrationData?: string;
+    orderUrlHash?: string | undefined;
 };
 
 const OrderConfirmationPage: FC<ServerSidePropsType> = () => {

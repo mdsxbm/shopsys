@@ -25,7 +25,7 @@ export const RegistrationContent: FC = () => {
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const [formProviderMethods, defaultValues] = useRegistrationForm();
     const formMeta = useRegistrationFormMeta(formProviderMethods);
-    const register = useRegistration();
+    const { register } = useRegistration();
 
     useErrorPopup(formProviderMethods, formMeta.fields, undefined, GtmMessageOriginType.other);
 
@@ -37,7 +37,6 @@ export const RegistrationContent: FC = () => {
             cartUuid,
             country: registrationFormData.country.value,
             companyCustomer: registrationFormData.customer === 'companyCustomer',
-            lastOrderUuid: null,
             billingAddressUuid: null,
         });
 
