@@ -9,6 +9,8 @@ use Shopsys\FrameworkBundle\Form\Admin\TransportAndPayment\FreeTransportAndPayme
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 
 class TransportAndPaymentController extends AdminBaseController
 {
@@ -83,5 +85,29 @@ class TransportAndPaymentController extends AdminBaseController
                 'domain' => $this->domain,
             ],
         );
+    }
+
+    /**
+     * @Route("/transport-and-payment/transport-and-payment-list/", condition="request.isXmlHttpRequest()")
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function transportAndPaymentListAction(Request $request): JsonResponse
+    {
+        $response = [];
+
+        $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
+        $locale = $this->adminDomainTabsFacade->getSelectedDomainConfig()->getLocale();
+        $visiblePayments = $this->paymentFacade->getVisibleByDomainId($domainId);
+
+        foreach ($visiblePayments as $payment) {
+            $response['paymentItems'][] = $payment->getName($locale);
+        }
+
+        foreach ($this->transportFacade->getVisibleByDomainId($domainId, $visiblePayments) as $transport) {
+            $response['shippingItems'][] = $transport->getName($locale);
+        }
+
+        return new JsonResponse($response);
     }
 }
