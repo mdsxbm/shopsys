@@ -3,8 +3,10 @@ import { FormBlockWrapper, FormHeading } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
+import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { TIDs } from 'cypress/tids';
 import { useIsCustomerUserRegisteredQuery } from 'graphql/requests/customer/queries/IsCustomerUserRegisteredQuery.generated';
+import { TypeLoginTypeEnum } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useFormContext, useWatch } from 'react-hook-form';
@@ -24,6 +26,7 @@ export const ContactInformationEmail: FC = () => {
     const { t } = useTranslation();
     const updateContactInformation = usePersistStore((store) => store.updateContactInformation);
     const isUserLoggedIn = useIsUserLoggedIn();
+    const user = useCurrentCustomerData();
 
     const formProviderMethods = useFormContext<ContactInformation>();
     const { formState } = formProviderMethods;
@@ -43,6 +46,9 @@ export const ContactInformationEmail: FC = () => {
         updatePortalContent(<LoginPopup shouldOverwriteCustomerUserCart defaultEmail={emailValue} />);
     };
 
+    const isWebOrAdminUser =
+        user?.loginInfo.loginType === TypeLoginTypeEnum.Web || user?.loginInfo.loginType === TypeLoginTypeEnum.Admin;
+
     return (
         <FormBlockWrapper>
             <FormHeading>{t('Customer information')}</FormHeading>
@@ -54,6 +60,7 @@ export const ContactInformationEmail: FC = () => {
                 textInputProps={{
                     label: formMeta.fields.email.label,
                     required: true,
+                    disabled: isWebOrAdminUser ? true : false,
                     type: 'email',
                     autoComplete: 'email',
                     onChange: (event) => updateContactInformation({ email: event.currentTarget.value }),
