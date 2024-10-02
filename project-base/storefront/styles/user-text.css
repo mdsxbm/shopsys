@@ -104,14 +104,10 @@
             }
 
             li {
-                @apply flex justify-between border-solid border-border py-4 px-5 text-h6 first:border-t-0 vl:border-t vl:border-borderLight;
+                @apply flex justify-between py-4 px-5 text-base odd:bg-tableBackgroundContrast;
 
                 &>*:last-child {
                     @apply font-bold lowercase;
-                }
-
-                &:nth-child(odd) {
-                    @apply border-l bg-grayLight vl:border-l-0;
                 }
             }
         }

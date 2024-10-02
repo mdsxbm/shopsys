@@ -1,0 +1,15 @@
+query BlogTransportsQuery {
+    settings {
+        pricing {
+            freeTransportAndPaymentPriceWithVatLimit
+        }
+    }
+    transports {
+        __typename
+        uuid
+        name
+        price {
+            ...PriceFragment
+        }
+    }
+}
