@@ -1,5 +1,6 @@
 import { PaymentListItem } from './PaymentSelectListItem';
 import { TransportListItem } from './TransportSelectListItem';
+import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { PacketeryContainer } from 'components/Pages/Order/TransportAndPayment/PacketeryContainer';
@@ -8,10 +9,9 @@ import {
     useTransportChangeInSelect,
 } from 'components/Pages/Order/TransportAndPayment/transportAndPaymentUtils';
 import { TIDs } from 'cypress/tids';
-import { AnimatePresence, m } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import { TypeTransportWithAvailablePaymentsFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
-import { collapseExpandAnimation } from 'utils/animations/animationVariants';
 import { ChangePaymentInCart } from 'utils/cart/useChangePaymentInCart';
 import { ChangeTransportInCart } from 'utils/cart/useChangeTransportInCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
@@ -49,23 +49,29 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                 <div tid={TIDs.pages_order_transport}>
                     <div className="h4 mb-3">{t('Choose transport')}</div>
                     <ul>
-                        {transport ? (
-                            <TransportListItem
-                                isActive
-                                changeTransport={changeTransport}
-                                pickupPlace={pickupPlace}
-                                transport={transport}
-                            />
-                        ) : (
-                            transports.map((transportItem) => (
-                                <TransportListItem
-                                    key={transportItem.uuid}
-                                    changeTransport={changeTransport}
-                                    pickupPlace={pickupPlace}
-                                    transport={transportItem}
-                                />
-                            ))
-                        )}
+                        <AnimatePresence initial={false}>
+                            {transport ? (
+                                <AnimateCollapseDiv key="transport-selected" className="relative !block">
+                                    <TransportListItem
+                                        isActive
+                                        changeTransport={changeTransport}
+                                        pickupPlace={pickupPlace}
+                                        transport={transport}
+                                    />
+                                </AnimateCollapseDiv>
+                            ) : (
+                                <AnimateCollapseDiv key="transports-list" className="relative !block">
+                                    {transports.map((transportItem) => (
+                                        <TransportListItem
+                                            key={transportItem.uuid}
+                                            changeTransport={changeTransport}
+                                            pickupPlace={pickupPlace}
+                                            transport={transportItem}
+                                        />
+                                    ))}
+                                </AnimateCollapseDiv>
+                            )}
+                        </AnimatePresence>
                     </ul>
                     {!!transport && (
                         <ResetButton
@@ -77,14 +83,12 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                 </div>
                 <AnimatePresence initial={false}>
                     {transport !== null && (
-                        <m.div
+                        <AnimateCollapseDiv
                             key="payments-list"
-                            animate="open"
                             className="relative mt-12 !flex flex-col"
                             exit="closed"
                             initial="closed"
                             tid={TIDs.pages_order_payment}
-                            variants={collapseExpandAnimation}
                         >
                             {isTransportSelectionLoading && <LoaderWithOverlay className="w-8" />}
                             <div className="h4 mb-3">{t('Choose payment')}</div>
@@ -108,7 +112,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                                     onClick={resetPaymentAndGoPayBankSwift}
                                 />
                             )}
-                        </m.div>
+                        </AnimateCollapseDiv>
                     )}
                 </AnimatePresence>
             </div>

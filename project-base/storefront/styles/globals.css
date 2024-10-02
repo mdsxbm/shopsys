@@ -135,7 +135,7 @@ input[type='number'] {
 }
 
 .select__menu {
-    @apply !z-[3] !m-0 !overflow-hidden !rounded-b-md !border-2 !border-t-0 !border-inputBorder !shadow-none hover:!border-inputBorderHovered active:!border-inputBorderActive disabled:!border-inputBorderDisabled;
+    @apply !z-[3] !m-0 !overflow-hidden !rounded-b-md !border-2 !border-t-0 !border-inputBorder !shadow-none hover:!border-inputBorderHovered active:!border-inputBorderActive disabled:!border-inputBorderDisabled animate-fadeInFromTop;
 }
 
 .select__menu-list {
@@ -217,4 +217,19 @@ input[type='number'] {
 
 .lg-outer .lg-thumb-item img {
     @apply !h-auto max-h-full !w-auto max-w-full;
+}
+
+@keyframes fadeOutToTop {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-2rem);
+    }
+}
+
+.animate-fadeOutToTop {
+    animation: fadeOutToTop 0.2s ease-in-out;
 }

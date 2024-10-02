@@ -1,5 +1,6 @@
 import { PromoCodeInfo } from './PromoCodeInfo';
 import { usePromoCodeForm, usePromoCodeFormMeta } from './promoCodeFormMeta';
+import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
 import { PlusIcon } from 'components/Basic/Icon/PlusIcon';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
@@ -7,11 +8,10 @@ import { Button } from 'components/Forms/Button/Button';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { TIDs } from 'cypress/tids';
-import { AnimatePresence, m } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
 import { FormProvider } from 'react-hook-form';
-import { collapseExpandAnimation } from 'utils/animations/animationVariants';
 import { useApplyPromoCodeToCart } from 'utils/cart/useApplyPromoCodeToCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { useRemovePromoCodeFromCart } from 'utils/cart/useRemovePromoCodeFromCart';
@@ -58,13 +58,9 @@ export const PromoCode: FC = () => {
                     <AnimatePresence initial={false}>
                         {isContentVisible && (
                             <FormProvider {...formProviderMethods}>
-                                <m.form
+                                <AnimateCollapseDiv
                                     key="promo-code"
-                                    animate="open"
                                     className="mt-15 sm:mt-0 !flex"
-                                    exit="closed"
-                                    initial="closed"
-                                    variants={collapseExpandAnimation}
                                     onSubmit={formProviderMethods.handleSubmit((promoCodeFormData) =>
                                         applyPromoCodeToCart(promoCodeFormData.promoCode),
                                     )}
@@ -93,7 +89,7 @@ export const PromoCode: FC = () => {
                                             {t('Apply')}
                                         </SubmitButton>
                                     </div>
-                                </m.form>
+                                </AnimateCollapseDiv>
                             </FormProvider>
                         )}
                     </AnimatePresence>

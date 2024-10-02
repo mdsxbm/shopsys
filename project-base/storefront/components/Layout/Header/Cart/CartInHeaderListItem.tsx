@@ -50,7 +50,7 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
                     {product.fullName}
                 </ExtendedNextLink>
             </div>
-            <div className="flex flex-row lg:w-full lg:w-auto gap-x-6 mt-2 lg:mt-0">
+            <div className="flex flex-row lg:w-auto gap-x-6 mt-2 lg:mt-0">
                 <div className="text-sm w-20 text-center">{quantity + ' ' + product.unit.name}</div>
 
                 {isProductPriceVisible && (

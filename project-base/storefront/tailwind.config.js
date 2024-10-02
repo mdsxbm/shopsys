@@ -157,6 +157,15 @@ module.exports = {
             borderRadius: {
                 DEFAULT: '0.1875rem',
             },
+            keyframes: {
+                fadeInFromTop: {
+                    '0%': { opacity: 0, transform: 'translateY(-2rem)' },
+                    '100%': { opacity: 1, transform: 'translateY(0)' },
+                },
+            },
+            animation: {
+                fadeInFromTop: 'fadeInFromTop 0.2s ease-in-out',
+            },
         },
         plugins: [],
     },

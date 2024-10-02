@@ -21,29 +21,33 @@ export const SalesRepresentative: FC = () => {
     }
 
     return (
-        <div className="flex items-start gap-4 w-full pt-4">
-            {salesRepresentative.image && (
-                <Image
-                    alt={t('Need advice?')}
-                    className="w-12 h-12 rounded-full object-cover"
-                    height={100}
-                    src={salesRepresentative.image.url}
-                    width={100}
-                />
-            )}
-            <div className="font-medium dark:text-white w-full">
-                {fullName && (
-                    <>
-                        <p className="text-lg font-semibold font-secondary leading-7">{fullName}</p>
-                        <p className="text-xs font-semibold font-secondary text-textSubtle uppercase tracking-wider">
-                            {t('Your sales representative')}
-                        </p>
-                    </>
+        <div className="flex flex-col font-semibold">
+            <div className="flex items-start gap-4 w-full pt-4">
+                {salesRepresentative.image && (
+                    <Image
+                        alt={t('Need advice?')}
+                        className="w-12 h-12 rounded-full object-cover"
+                        height={100}
+                        src={salesRepresentative.image.url}
+                        width={100}
+                    />
                 )}
+                <div className="w-full">
+                    {fullName && (
+                        <>
+                            <p className="text-base font-secondary">{fullName}</p>
+                            <p className="text-xs font-secondary text-textSubtle uppercase tracking-wider">
+                                {t('Your sales representative')}
+                            </p>
+                        </>
+                    )}
+                </div>
+            </div>
+            <div className="w-full">
                 {telephone && (
                     <div className="flex gap-2 items-center my-2">
                         <PhoneIcon className="w-6 h-6 p-0.5 flex-shrink-0" />
-                        <a className="no-underline text-sm text-text" href={`tel:${telephone}`}>
+                        <a className="no-underline text-[15px] leading-[22.5px] text-text" href={`tel:${telephone}`}>
                             {formatPhoneNumber(telephone)}
                         </a>
                     </div>
@@ -51,7 +55,10 @@ export const SalesRepresentative: FC = () => {
                 {email && (
                     <div className="flex gap-2 items-center mt-1 w-full max-w-80 lg:max-w-full overflow-auto">
                         <MailIcon className="w-6 h-6 flex-shrink-0" />
-                        <a className="max-w-44 lg:max-w-96 no-underline text-sm text-text" href={`mailto:${email}`}>
+                        <a
+                            className="max-w-44 lg:max-w-96 no-underline text-[15px] leading-[22.5px] text-text"
+                            href={`mailto:${email}`}
+                        >
                             {email}
                         </a>
                     </div>
