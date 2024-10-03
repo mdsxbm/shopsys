@@ -15,38 +15,20 @@ export const SocialNetworkLogin: FC<SocialNetworkLoginProps> = ({
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const productListUuids: string[] = Object.values(usePersistStore((store) => store.productListUuids));
 
-    const getSocialNetworkLoginUrl = (
-        socialNetwork: TypeLoginTypeEnum,
-        cartUuid: string | null,
-        shouldOverwriteCustomerUserCart: boolean | undefined,
-        productListUuids: string[],
-    ) => {
-        let url = `/social-network/login/${socialNetwork}`;
-        if (cartUuid) {
-            url += `?cartUuid=${cartUuid}&shouldOverwriteCustomerUserCart=${shouldOverwriteCustomerUserCart ? 'true' : 'false'}`;
-        }
-        if (productListUuids.length > 0) {
-            const separator = cartUuid ? '&' : '?';
-            url += `${separator}productListUuids=${productListUuids.join(',')}`;
-        }
-
-        return url;
-    };
-
     return (
         <div className="flex gap-4">
-            {socialNetworks.map((socialNetwork) => (
-                <SocialNetworkLoginLink
-                    key={socialNetwork}
-                    socialNetwork={socialNetwork}
-                    href={getSocialNetworkLoginUrl(
-                        socialNetwork,
-                        cartUuid,
-                        shouldOverwriteCustomerUserCart,
-                        productListUuids,
-                    )}
-                />
-            ))}
+            {socialNetworks.map((socialNetwork) => {
+                const url = {
+                    pathname: `/social-network/login/${socialNetwork}`,
+                    query: {
+                        ...(cartUuid && { cartUuid }),
+                        ...(shouldOverwriteCustomerUserCart !== undefined && { shouldOverwriteCustomerUserCart }),
+                        ...(productListUuids.length > 0 && { productListUuids: productListUuids.join(',') }),
+                    },
+                };
+
+                return <SocialNetworkLoginLink key={socialNetwork} href={url} socialNetwork={socialNetwork} />;
+            })}
         </div>
     );
 };

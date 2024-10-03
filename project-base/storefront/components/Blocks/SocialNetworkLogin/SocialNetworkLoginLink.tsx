@@ -2,9 +2,10 @@ import { SocialNetworkIcon } from './SocialNetworkLoginLinkIcon';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { TypeLoginTypeEnum } from 'graphql/types';
 import { twJoin } from 'tailwind-merge';
+import { UrlObject } from 'url';
 import { getSocialNetworkLoginLinkBg } from 'utils/getSocialNetworkLoginLinkBg';
 
-export const SocialNetworkLoginLink: FC<{ href: string; socialNetwork: TypeLoginTypeEnum }> = ({
+export const SocialNetworkLoginLink: FC<{ href: UrlObject; socialNetwork: TypeLoginTypeEnum }> = ({
     href,
     socialNetwork,
 }) => {
