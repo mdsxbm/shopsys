@@ -19,7 +19,7 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
     const { url } = useDomainConfig();
     const [customerUrl] = getInternationalizedStaticUrls(['/customer'], url);
     const [isClicked, setIsClicked] = useState(false);
-    const [isHovered, setIsHovered] = useState(true);
+    const [isHovered, setIsHovered] = useState(false);
     const isHoveredDelayed = useDebounce(isHovered, 200);
 
     const { width } = useGetWindowSize();
@@ -31,7 +31,7 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                 className={twMergeCustom('group lg:relative lg:flex', (isClicked || isHovered) && 'z-aboveOverlay')}
                 tid={TIDs.my_account_link}
                 onMouseEnter={() => isDesktop && setIsHovered(true)}
-                onMouseLeave={() => isDesktop && setIsHovered(true)}
+                onMouseLeave={() => isDesktop && setIsHovered(false)}
             >
                 <MenuIconicItemLink
                     className="rounded-t p-3 max-lg:hidden transition-all"
@@ -72,7 +72,7 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                 isActive={isClicked || isHoveredDelayed}
                 onClick={() => {
                     setIsClicked(false);
-                    setIsHovered(true);
+                    setIsHovered(false);
                 }}
             />
         </>
