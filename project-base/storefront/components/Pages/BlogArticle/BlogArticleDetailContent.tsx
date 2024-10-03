@@ -34,7 +34,7 @@ export const BlogArticleDetailContent: FC<BlogArticleDetailContentProps> = ({ bl
                         className="mb-2 text-left text-xs font-semibold text-textDisabled"
                         tid={TIDs.blog_article_publication_date}
                     >
-                        {formatDate(blogArticle.publishDate, 'l')}
+                        {formatDate(blogArticle.publishDate)}
                     </div>
 
                     {!!blogArticle.text && <GrapesJsParser isBlogPage text={blogArticle.text} />}

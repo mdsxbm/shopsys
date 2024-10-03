@@ -45,10 +45,10 @@ export const OpeningHours: FC<{ openingHours: StoreOrPacketeryPoint['openingHour
         <>
             {'exceptionDays' in openingHours &&
                 openingHours.exceptionDays?.map((exceptionDay, index) => {
-                    let exceptionDayText = formatDate(exceptionDay.from, 'D.M.');
+                    let exceptionDayText = formatDate(exceptionDay.from);
 
                     if (exceptionDay.to) {
-                        exceptionDayText += ` - ${formatDate(exceptionDay.to, 'D.M.')}`;
+                        exceptionDayText += ` - ${formatDate(exceptionDay.to)}`;
                     }
 
                     if (exceptionDay.times.length) {
@@ -82,12 +82,12 @@ export const OpeningHours: FC<{ openingHours: StoreOrPacketeryPoint['openingHour
                         <div
                             key={dayOfWeek}
                             className={twJoin(
-                                'flex flex-row py-1.5 px-2.5 items-center gap-2 vl:gap-5',
+                                'flex flex-row items-center gap-2 px-2.5 py-1.5 vl:gap-5',
                                 isToday && 'bg-backgroundAccentLess',
                             )}
                         >
                             <h6 className="shrink-0  basis-32 uppercase">
-                                {getDayName(openingHours.dayOfWeek, dayOfWeek)} {formatDate(date, 'D. M.')}
+                                {getDayName(openingHours.dayOfWeek, dayOfWeek)} {formatDate(date)}
                             </h6>
                             <span className="text-sm">
                                 {isClosedWholeDay ? (
