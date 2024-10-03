@@ -4,6 +4,7 @@ import { Image } from 'components/Basic/Image/Image';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { TypeSalesRepresentative } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
+import { formatPhoneNumber } from 'utils/formaters/formatPhoneNumber';
 
 export const SalesRepresentative: FC = () => {
     const { t } = useTranslation();
@@ -32,16 +33,14 @@ export const SalesRepresentative: FC = () => {
                         width={100}
                     />
                 )}
-                <div className="w-full">
-                    {fullName && (
-                        <>
-                            <p className="text-base font-secondary">{fullName}</p>
-                            <p className="text-xs font-secondary text-textSubtle uppercase tracking-wider">
-                                {t('Your sales representative')}
-                            </p>
-                        </>
-                    )}
-                </div>
+                {fullName && (
+                    <div className="w-full">
+                        <p className="text-base font-secondary">{fullName}</p>
+                        <p className="text-xs font-secondary text-textSubtle uppercase tracking-wider">
+                            {t('Your sales representative')}
+                        </p>
+                    </div>
+                )}
             </div>
             <div className="w-full">
                 {telephone && (
@@ -73,13 +72,6 @@ const getFullName = (firstName?: string | null, lastName?: string | null): strin
         return firstName ?? lastName;
     }
     return `${firstName} ${lastName}`;
-};
-
-const formatPhoneNumber = (phoneNumber: string): string | null | undefined => {
-    if (phoneNumber && phoneNumber.length === 9) {
-        return phoneNumber.replace(/(\d{3})(\d{3})(\d{3})/, '$1 $2 $3');
-    }
-    return phoneNumber ? phoneNumber : undefined;
 };
 
 const getShowSalesRepresentative = (salesRepresentative: TypeSalesRepresentative | null | undefined): boolean => {
