@@ -19,7 +19,7 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
     const { url } = useDomainConfig();
     const [customerUrl] = getInternationalizedStaticUrls(['/customer'], url);
     const [isClicked, setIsClicked] = useState(false);
-    const [isHovered, setIsHovered] = useState(false);
+    const [isHovered, setIsHovered] = useState(true);
     const isHoveredDelayed = useDebounce(isHovered, 200);
 
     const { width } = useGetWindowSize();
@@ -31,7 +31,7 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                 className={twMergeCustom('group lg:relative lg:flex', (isClicked || isHovered) && 'z-aboveOverlay')}
                 tid={TIDs.my_account_link}
                 onMouseEnter={() => isDesktop && setIsHovered(true)}
-                onMouseLeave={() => isDesktop && setIsHovered(false)}
+                onMouseLeave={() => isDesktop && setIsHovered(true)}
             >
                 <MenuIconicItemLink
                     className="rounded-t p-3 max-lg:hidden transition-all"
@@ -39,7 +39,7 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                     type="account"
                 >
                     <div className="relative">
-                        <UserIcon className="w-6 max-h-[22px]" />
+                        <UserIcon className="w-6 max-h-5.5" />
                         <div className="w-[10px] h-[10px] absolute -right-1 -top-1 rounded-full bg-actionPrimaryBackground" />
                     </div>
                     {t('My account')}
@@ -53,7 +53,7 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                         }}
                     >
                         <div className="relative flex h-full w-full items-center justify-center text-textInverted transition-colors">
-                            <UserIcon className="w-6 text-textInverted max-h-[22px]" />
+                            <UserIcon className="w-6 text-textInverted max-h-5.5" />
                             <div className="w-[10px] h-[10px] absolute -right-1 -top-1 rounded-full bg-actionPrimaryBackground" />
                         </div>
                     </div>
@@ -72,7 +72,7 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                 isActive={isClicked || isHoveredDelayed}
                 onClick={() => {
                     setIsClicked(false);
-                    setIsHovered(false);
+                    setIsHovered(true);
                 }}
             />
         </>

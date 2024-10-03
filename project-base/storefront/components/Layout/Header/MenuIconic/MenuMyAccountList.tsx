@@ -27,9 +27,7 @@ export const MenuMyAccountList: FC = () => {
         <ul className="flex flex-col max-h-[87dvh] overflow-auto gap-2 p-1">
             <MenuMyAccountListItem>
                 <MenuIconicSubItemLink href={customerOrdersUrl} tid={TIDs.header_my_orders_link} type="orderList">
-                    <IconWrapper>
-                        <SearchListIcon className="size-6" />
-                    </IconWrapper>
+                    <SearchListIcon className="size-6 mr-5" />
                     {t('My orders')}
                 </MenuIconicSubItemLink>
             </MenuMyAccountListItem>
@@ -39,9 +37,7 @@ export const MenuMyAccountList: FC = () => {
                     tid={TIDs.header_my_complaints_link}
                     type="complaintList"
                 >
-                    <IconWrapper>
-                        <SearchListIcon className="size-6" />
-                    </IconWrapper>
+                    <SearchListIcon className="size-6 mr-5" />
                     {t('My complaints')}
                 </MenuIconicSubItemLink>
             </MenuMyAccountListItem>
@@ -51,27 +47,21 @@ export const MenuMyAccountList: FC = () => {
                     tid={TIDs.header_edit_profile_link}
                     type="editProfile"
                 >
-                    <IconWrapper>
-                        <EditIcon className="size-6" />
-                    </IconWrapper>
+                    <EditIcon className="size-6 mr-5" />
                     {t('Edit profile')}
                 </MenuIconicSubItemLink>
             </MenuMyAccountListItem>
             {canManageUsers && (
                 <MenuMyAccountListItem>
                     <MenuIconicSubItemLink href={customerUsersUrl} type="customer-users">
-                        <IconWrapper>
-                            <UserIcon className="w-6 max-h-[22px]" />
-                        </IconWrapper>
+                        <UserIcon className="w-6 mr-5 max-h-5.5" />
                         {t('Customer users')}
                     </MenuIconicSubItemLink>
                 </MenuMyAccountListItem>
             )}
             <MenuMyAccountListItem>
                 <MenuIconicSubItemLink tid={TIDs.header_logout} onClick={logout}>
-                    <IconWrapper>
-                        <ExitIcon className="size-6" />
-                    </IconWrapper>
+                    <ExitIcon className="size-6 mr-5" />
                     {t('Logout')}
                 </MenuIconicSubItemLink>
             </MenuMyAccountListItem>
@@ -79,8 +69,6 @@ export const MenuMyAccountList: FC = () => {
         </ul>
     );
 };
-
-const IconWrapper: FC = ({ children }) => <div className="w-11">{children}</div>;
 
 const MenuMyAccountListItem: FC = ({ children }) => (
     <li

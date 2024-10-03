@@ -166,6 +166,9 @@ module.exports = {
             animation: {
                 fadeInFromTop: 'fadeInFromTop 0.2s ease-in-out',
             },
+            spacing: {
+                5.5: '1.375rem',
+            },
         },
         plugins: [],
     },
