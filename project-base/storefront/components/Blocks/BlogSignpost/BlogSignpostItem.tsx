@@ -1,5 +1,5 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { twJoin } from 'tailwind-merge';
+import { twMergeCustom } from 'utils/twMerge';
 
 type BlogSignpostItemProps = {
     isActive: boolean;
@@ -10,13 +10,13 @@ type BlogSignpostItemProps = {
 export const BlogSignpostItem: FC<BlogSignpostItemProps> = ({ children, href, isActive, itemLevel }) => (
     <ExtendedNextLink
         href={href}
-        style={itemLevel !== undefined ? { marginLeft: `calc(6px*${itemLevel})` } : {}}
+        style={itemLevel !== undefined ? { marginLeft: `calc(12px*${itemLevel})` } : {}}
         type="blogCategory"
-        className={twJoin(
-            'relative flex items-center rounded py-3 pr-9 pl-3 underline hover:no-underline',
+        className={twMergeCustom(
+            'transition-all relative flex gap-x-3 items-center text-[14px] leading-4 font-secondary py-[13px] px-3 font-semibold rounded-xl no-underline hover:no-underline bg-backgroundMore',
             isActive
                 ? 'bg-backgroundAccent  text-textInverted no-underline hover:bg-backgroundAccentMore hover:text-textInverted'
-                : 'text-text hover:text-text',
+                : 'text-text hover:text-text hover:bg-backgroundMost',
         )}
     >
         {children}

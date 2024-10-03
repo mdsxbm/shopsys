@@ -7,6 +7,7 @@ fragment BlogCategoryDetailFragment on BlogCategory {
     }
     seoTitle
     seoMetaDescription
+    description
     hreflangLinks {
         ...HreflangLinksFragment
     }

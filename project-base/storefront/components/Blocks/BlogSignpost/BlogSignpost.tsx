@@ -14,8 +14,8 @@ export const BlogSignpost: FC<BlogSingpostProps> = ({ blogCategoryItems, activeI
     const { t } = useTranslation();
 
     return (
-        <div className="flex flex-col rounded bg-backgroundMore p-7">
-            <h2 className="mb-3">{t('Article categories')}</h2>
+        <div className="flex flex-col gap-y-2.5">
+            <p className="mb-0 font-secondary font-semibold">{t('Article categories')}</p>
 
             {blogCategoryItems?.map((blogCategory) => {
                 const isActive = activeItem === blogCategory.uuid;
