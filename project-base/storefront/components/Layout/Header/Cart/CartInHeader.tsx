@@ -12,7 +12,6 @@ import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import useTranslation from 'next-translate/useTranslation';
-import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
@@ -38,7 +37,6 @@ const nonEmptyCartTwClassName = [
 ];
 
 export const CartInHeader: FC = ({ className }) => {
-    const router = useRouter();
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
     const { cart, isCartFetchingOrUnavailable } = useCurrentCart();
@@ -71,6 +69,7 @@ export const CartInHeader: FC = ({ className }) => {
                 )}
                 <ExtendedNextLink
                     href={cartUrl}
+                    skeletonType="cart"
                     tid={TIDs.header_cart_link}
                     className={twJoin(
                         'hidden items-center gap-x-3 rounded-lg h-11 pr-2 pl-4 no-underline transition-all hover:no-underline group-hover:shadow-lg lg:flex border cursor-pointer',
@@ -165,13 +164,11 @@ export const CartInHeader: FC = ({ className }) => {
                                         )}
                                     >
                                         <FreeTransportRange />
-                                        <Button
-                                            className="rounded-lg"
-                                            size="small"
-                                            onClick={() => router.push(cartUrl)}
-                                        >
-                                            {t('Go to cart')}
-                                        </Button>
+                                        <ExtendedNextLink href={cartUrl} skeletonType="cart">
+                                            <Button className="rounded-lg" size="small">
+                                                {t('Go to cart')}
+                                            </Button>
+                                        </ExtendedNextLink>
                                     </div>
                                 </>
                             ) : (
