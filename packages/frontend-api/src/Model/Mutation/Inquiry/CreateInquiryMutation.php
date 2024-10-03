@@ -8,6 +8,7 @@ use Exception;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Psr\Log\LoggerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Inquiry\InquiryData;
 use Shopsys\FrameworkBundle\Model\Inquiry\InquiryDataFactory;
 use Shopsys\FrameworkBundle\Model\Inquiry\InquiryFacade;
@@ -26,6 +27,7 @@ class CreateInquiryMutation extends AbstractMutation
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrameworkBundle\Model\Inquiry\Mail\InquiryMailFacade $inquiryMailFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      */
     public function __construct(
         protected readonly LoggerInterface $logger,
@@ -34,6 +36,7 @@ class CreateInquiryMutation extends AbstractMutation
         protected readonly ProductFacade $productFacade,
         protected readonly InquiryMailFacade $inquiryMailFacade,
         protected readonly Domain $domain,
+        protected readonly CurrentCustomerUser $currentCustomerUser,
     ) {
     }
 
@@ -78,6 +81,7 @@ class CreateInquiryMutation extends AbstractMutation
         $inquiryData->companyNumber = $input['companyNumber'] ?? null;
         $inquiryData->companyTaxNumber = $input['companyTaxNumber'] ?? null;
         $inquiryData->note = $input['note'] ?? null;
+        $inquiryData->customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
         $inquiryData->product = $product;
 
         return $inquiryData;
