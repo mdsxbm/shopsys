@@ -60,8 +60,8 @@ export const useProductList = (
     }, [productListData?.productList?.uuid]);
 
     const refetch = async () => {
+        setForceFetch(true);
         await refetchProductList();
-        setForceFetch(false);
     };
 
     const removeList = async () => {
