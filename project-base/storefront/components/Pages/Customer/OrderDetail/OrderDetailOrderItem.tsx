@@ -47,10 +47,12 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({ orderItem,
             <div className="w-full flex flex-wrap justify-between vl:grid vl:grid-cols-[4fr_1fr_2fr_1fr] gap-3 vl:gap-5 last:border-none border-b border-b-borderLess items-center">
                 {isDiscount ? (
                     <span>{orderItem.name}</span>
-                ) : (
-                    <ExtendedNextLink className="w-full vl:w-fit" href={orderItem.product?.slug ?? ''}>
+                ) : orderItem.product?.isVisible ? (
+                    <ExtendedNextLink className="w-full vl:w-fit" href={orderItem.product.slug}>
                         {orderItem.name}
                     </ExtendedNextLink>
+                ) : (
+                    orderItem.name
                 )}
                 {isDiscount ? (
                     <div />
