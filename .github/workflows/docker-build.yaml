@@ -501,7 +501,7 @@ jobs:
             -   name: Check pull request labels
                 run: |
                     PULL_REQUEST_LABELS=`gh api -H "Accept: application/vnd.github+json" /repos/shopsys/shopsys/issues/${{ github.event.pull_request.number }}/labels | jq '[.[].name]'`
-                    if ! echo "$PULL_REQUEST_LABELS" | jq -e '. | index("${REGENERATE_SCREENSHOTS_LABEL}"")' >/dev/null; then
+                    if ! echo "$PULL_REQUEST_LABELS" | jq -e '. | index("${REGENERATE_SCREENSHOTS_LABEL}")' >/dev/null; then
                         exit 1;
                     fi
             -   name: GIT checkout branch - ${{ github.head_ref }}
