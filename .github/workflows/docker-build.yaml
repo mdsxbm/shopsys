@@ -433,7 +433,7 @@ jobs:
             -   name: Check pull request labels
                 run: |
                     PULL_REQUEST_LABELS=`gh api -H "Accept: application/vnd.github+json" /repos/shopsys/shopsys/issues/${{ github.event.pull_request.number }}/labels | jq '[.[].name]'`
-                    if echo "$PULL_REQUEST_LABELS" | jq -e --arg label "$REGENERATE_SCREENSHOTS_LABEL" '. | index($label)' >/dev/null; then
+                    if echo "$PULL_REQUEST_LABELS" | jq --arg label "$REGENERATE_SCREENSHOTS_LABEL" -e '. | index($label)' >/dev/null; then
                         exit 1;
                     fi
             -   name: GIT checkout branch - ${{ github.ref }}
@@ -501,7 +501,7 @@ jobs:
             -   name: Check pull request labels
                 run: |
                     PULL_REQUEST_LABELS=`gh api -H "Accept: application/vnd.github+json" /repos/shopsys/shopsys/issues/${{ github.event.pull_request.number }}/labels | jq '[.[].name]'`
-                    if ! echo "$PULL_REQUEST_LABELS" | jq -e --arg label "$REGENERATE_SCREENSHOTS_LABEL" '. | index($label)' >/dev/null; then
+                    if ! echo "$PULL_REQUEST_LABELS" | jq --arg label "$REGENERATE_SCREENSHOTS_LABEL" -e '. | index($label)' >/dev/null; then
                         exit 1;
                     fi
             -   name: GIT checkout branch - ${{ github.head_ref }}
@@ -743,7 +743,7 @@ jobs:
             -   name: Run Cypress tests
                 run: |
                     PULL_REQUEST_LABELS=`gh api -H "Accept: application/vnd.github+json" /repos/shopsys/shopsys/issues/${{ github.event.pull_request.number }}/labels | jq '[.[].name]'`
-                    if ! echo "$PULL_REQUEST_LABELS" | jq -e --arg label "$REGENERATE_SCREENSHOTS_LABEL" '. | index($label)' >/dev/null; then
+                    if ! echo "$PULL_REQUEST_LABELS" | jq --arg label "$REGENERATE_SCREENSHOTS_LABEL" -e '. | index($label)' >/dev/null; then
                         docker compose run cypress-regenerate
                     else
                         docker compose run cypress
