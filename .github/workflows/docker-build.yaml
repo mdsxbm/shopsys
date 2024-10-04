@@ -26,7 +26,6 @@ jobs:
             BRANCH_NAME: ${{ steps.variables.outputs.BRANCH_NAME }}
             BRANCH_NAME_ESCAPED: ${{ steps.variables.outputs.BRANCH_NAME_ESCAPED }}
             TRAEFIK_HOSTS: ${{ steps.variables.outputs.TRAEFIK_HOSTS }}
-            REGENERATE_SCREENSHOTS_LABEL: ${{ steps.variables.outputs.REGENERATE_SCREENSHOTS_LABEL }}
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
                 uses: actions/checkout@v4
@@ -50,7 +49,6 @@ jobs:
                     BRANCH=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
                     BRANCH_NAME="${BRANCH,,}"
                     BRANCH_NAME_ESCAPED="${BRANCH_NAME//./-}"
-                    REGENERATE_SCREENSHOTS_LABEL="regenerate screenshots"
                     echo "BRANCH_NAME=${BRANCH_NAME}" >> $GITHUB_OUTPUT
                     echo "BRANCH_NAME_ESCAPED=${BRANCH_NAME_ESCAPED}" >> $GITHUB_OUTPUT
                     echo "DOCKER_PHP_FPM_REPOSITORY_TAG=${DOCKER_PHP_FPM_REPOSITORY_TAG}" >> $GITHUB_OUTPUT
@@ -61,7 +59,6 @@ jobs:
                     echo "DOCKER_ELASTICSEARCH_IMAGE_EXISTS=${DOCKER_ELASTICSEARCH_IMAGE_EXISTS}" >> $GITHUB_OUTPUT
                     HOST=${BRANCH_NAME_ESCAPED}.${{ vars.REVIEW_STAGE_URL }}
                     echo "TRAEFIK_HOSTS=\`$HOST\`, \`cz.$HOST\`" >> $GITHUB_OUTPUT
-                    echo "REGENERATE_SCREENSHOTS_LABEL=${REGENERATE_SCREENSHOTS_LABEL}" >> $GITHUB_OUTPUT
             -   name: Prepare docker-compose.yml file from docker-compose.github-actions.yml.dist
                 run: |
                     sh .github/prepare-docker-compose-file.sh \
@@ -428,12 +425,11 @@ jobs:
         runs-on: ubuntu-22.04
         env:
             GH_TOKEN: ${{ github.token }}
-            REGENERATE_SCREENSHOTS_LABEL: ${{ needs.variables.outputs.REGENERATE_SCREENSHOTS_LABEL }}
         steps:
             -   name: Check pull request labels
                 run: |
                     PULL_REQUEST_LABELS=`gh api -H "Accept: application/vnd.github+json" /repos/shopsys/shopsys/issues/${{ github.event.pull_request.number }}/labels | jq '[.[].name]'`
-                    if echo "$PULL_REQUEST_LABELS" | jq --arg label "$REGENERATE_SCREENSHOTS_LABEL" -e '. | index($label)' >/dev/null; then
+                    if echo "$PULL_REQUEST_LABELS" | jq -e '. | index("regenerate screenshots")' >/dev/null; then
                         exit 1;
                     fi
             -   name: GIT checkout branch - ${{ github.ref }}
@@ -496,12 +492,11 @@ jobs:
         runs-on: ubuntu-22.04
         env:
             GH_TOKEN: ${{ github.token }}
-            REGENERATE_SCREENSHOTS_LABEL: ${{ needs.variables.outputs.REGENERATE_SCREENSHOTS_LABEL }}
         steps:
             -   name: Check pull request labels
                 run: |
                     PULL_REQUEST_LABELS=`gh api -H "Accept: application/vnd.github+json" /repos/shopsys/shopsys/issues/${{ github.event.pull_request.number }}/labels | jq '[.[].name]'`
-                    if ! echo "$PULL_REQUEST_LABELS" | jq --arg label "$REGENERATE_SCREENSHOTS_LABEL" -e '. | index($label)' >/dev/null; then
+                    if ! echo "$PULL_REQUEST_LABELS" | jq -e '. | index("regenerate screenshots")' >/dev/null; then
                         exit 1;
                     fi
             -   name: GIT checkout branch - ${{ github.head_ref }}
@@ -533,7 +528,7 @@ jobs:
                         --method DELETE \
                         -H "Accept: application/vnd.github+json" \
                         -H "X-GitHub-Api-Version: 2022-11-28" \
-                        /repos/shopsys/shopsys/issues/${{ github.event.pull_request.number }}/labels/"$REGENERATE_SCREENSHOTS_LABEL"
+                        /repos/shopsys/shopsys/issues/${{ github.event.pull_request.number }}/labels/regenerate%20screenshots
             -   name: Push changes
                 uses: ad-m/github-push-action@master
                 with:
@@ -626,8 +621,6 @@ jobs:
             github.ref_protected != true
         name: Build application and run standards checks and tests
         runs-on: ubuntu-22.04
-        env:
-            REGENERATE_SCREENSHOTS_LABEL: ${{ needs.variables.outputs.REGENERATE_SCREENSHOTS_LABEL }}
         needs: variables
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
@@ -743,7 +736,7 @@ jobs:
             -   name: Run Cypress tests
                 run: |
                     PULL_REQUEST_LABELS=`gh api -H "Accept: application/vnd.github+json" /repos/shopsys/shopsys/issues/${{ github.event.pull_request.number }}/labels | jq '[.[].name]'`
-                    if ! echo "$PULL_REQUEST_LABELS" | jq --arg label "$REGENERATE_SCREENSHOTS_LABEL" -e '. | index($label)' >/dev/null; then
+                    if ! echo "$PULL_REQUEST_LABELS" | jq -e '. | index("regenerate screenshots")' >/dev/null; then
                         docker compose run cypress-regenerate
                     else
                         docker compose run cypress
